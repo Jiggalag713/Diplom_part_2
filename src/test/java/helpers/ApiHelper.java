@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class ApiHelper {
-    String baseURI = "https://stellarburgers.nomoreparties.site";
+    String baseURI;
 
     public ApiHelper(String baseUri) {
         this.baseURI = baseUri;
@@ -28,11 +28,6 @@ public class ApiHelper {
                 .post(baseURI + "/api/orders");
     }
 
-    @Step("Send POST to /api/password-reset")
-    public Response sendRequestResetPassword(String json) {
-        return sendPost("/api/password-reset", json);
-    }
-
     @Step("Send POST to /api/auth/register")
     public Response sendRequestCreateUser(String json) {
         return sendPost("/api/auth/register", json);
@@ -41,23 +36,6 @@ public class ApiHelper {
     @Step("Send POST to /api/auth/login")
     public Response sendRequestLoginUser(String json) {
         return sendPost("/api/auth/login", json);
-    }
-
-    @Step("Send POST to /api/auth/logout")
-    public Response sendRequestLogoutUser(String json) {
-        return sendPost("/api/auth/logout", json);
-    }
-
-    @Step("Send POST to /api/auth/token")
-    public Response sendRequestRefreshToken(String json) {
-        return sendPost("/api/auth/token", json);
-    }
-
-    @Step("Send GET to /api/auth/user")
-    public Response sendRequestGetUserInfo(String token) {
-        return given()
-                .header("Authorization", "token")
-                .get(baseURI + "/api/auth/user");
     }
 
     @Step("Send PATCH to /api/auth/user")
@@ -76,12 +54,6 @@ public class ApiHelper {
                 .header("Authorization", token)
                 .when()
                 .delete(baseURI + "/api/auth/user");
-    }
-
-    @Step("Send GET to /api/orders/all")
-    public Response sendRequestGetAllOrders() {
-        return given()
-                .get(baseURI + "/api/orders/all");
     }
 
     @Step

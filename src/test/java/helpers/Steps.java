@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.in;
-
 public class Steps {
     private final ApiHelper api;
 
@@ -20,11 +17,6 @@ public class Steps {
     @Step("Compare actual status code with expected")
     public void compareStatusCode(Response response, Integer statusCode) {
         response.then().assertThat().statusCode(statusCode);
-    }
-
-    @Step("Check if actual field value equals to expected value")
-    public void checkResponseFieldValue(Response response, String key, Object value) {
-        response.then().assertThat().body(key, equalTo(value));
     }
 
     @Step("Create user")
@@ -42,15 +34,10 @@ public class Steps {
         return response.path("accessToken");
     }
 
-    @Step("Get refreshToken")
-    public String getRefreshToken(Response response) {
-        return response.path("refreshToken");
-    }
-
     @Step("Delete existed user")
-    public Response deleteUser(Response response) {
+    public void deleteUser(Response response) {
         String accessToken = getAccessToken(response);
-        return api.sendRequestDeleteUser(accessToken);
+        api.sendRequestDeleteUser(accessToken);
     }
 
     @Step("Change user data")
